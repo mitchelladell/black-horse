@@ -1,0 +1,19 @@
+.content {
+  min-height: 500px;
+}
+
+.fetching {
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+  min-height: 500px;
+  color: black;
+  background-color: white;
+}
+
+.ready {
+  opacity: 1;
+  transition: opacity 0.2s ease;
+  min-height: 500px;
+  color: black;
+  background-color: white;
+}

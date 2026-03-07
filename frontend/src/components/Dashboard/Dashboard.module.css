@@ -1,0 +1,38 @@
+.card {
+  background: white;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+  height: 500px;
+  width: 500px;
+}
+
+.name {
+  margin-bottom: 1.5rem;
+  color: #2d3748;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  color: #4a5568;
+}
+
+.stat span {
+  font-size: 0.8rem;
+  color: #a0aec0;
+  text-transform: uppercase;
+}
+
+.headerText {
+  color: black;
+  margin-bottom: 10px;
+}
