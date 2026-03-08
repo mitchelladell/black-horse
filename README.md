@@ -95,31 +95,30 @@ fullstack-challenge/
 
 **Both (recommended)**
 
-```bash
+> ⚠️ Requires Dev Container environment (VS Code + Dev Containers extension)
 
+```bash
 ./scripts/dev.sh
 ```
 
 Starts backend on `http://localhost:8080` and frontend on `http://localhost:3000`.
 
-API endpoints are documented with Swagger please visit :
-
-`http://localhost:8080/swagger-ui/index.html`
-
-**Backend only**
+**Without Dev Container — run separately:**
 
 ```bash
+# Backend (requires Java 17, Maven 3.8+)
 cd backend
 mvn spring-boot:run
-```
 
-**Frontend only**
-
-```bash
+# Frontend (requires Node.js 20+)
 cd frontend
 npm install
 npm run dev
 ```
+
+**Database**
+
+No setup required. The pre-populated SQLite database (`maplewood_school.sqlite`) is included in the repository and connects automatically when the backend starts.
 
 **Tests**
 
