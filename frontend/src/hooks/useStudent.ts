@@ -1,4 +1,3 @@
-// hooks/useStudent.ts
 import { useQuery } from "@tanstack/react-query";
 import { fetchScheduleApi, fetchStudentApi } from "../api/studentAPi";
 

@@ -23,6 +23,8 @@ describe("ScheduleTable", () => {
         sectionId: 1,
         courseId: 1,
         name: "Algebra",
+        code: "22",
+        credits: 2,
         timeSlots: [
           { id: 1, dayOfWeek: "Monday", startTime: "09:00", endTime: "10:00" },
         ],

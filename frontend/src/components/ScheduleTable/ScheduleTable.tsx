@@ -1,8 +1,7 @@
-import { useState } from "react";
-import styles from "./ScheduleTable.module.css";
 import { useUnenroll } from "../../hooks/useEnrollment";
 import type { ApiResponseError } from "../../types/ApiError";
 import type { ScheduleItem, ScheduleTimeSlot } from "../../types/Schedule";
+import styles from "./ScheduleTable.module.css";
 
 export const ScheduleTable = ({
   schedule,

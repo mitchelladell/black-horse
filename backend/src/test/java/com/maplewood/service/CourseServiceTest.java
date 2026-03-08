@@ -18,7 +18,7 @@ class CourseServiceTest {
 
     @Test
     void getCourses_callsRepository_andReturnsDtos() {
-        // 1. Setup
+
         CourseRepository repo = mock(CourseRepository.class);
         CourseService service = new CourseService(repo);
 

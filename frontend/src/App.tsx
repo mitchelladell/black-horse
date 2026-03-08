@@ -4,7 +4,6 @@ import { Navbar } from "./components/NavBar/NavBar.tsx";
 import { SchedulePage } from "./pages/SchedulePage.tsx";
 import { CoursesPage } from "./pages/CoursesPage.tsx";
 import { useAppSelector } from "./store/hooks.ts";
-
 import "./App.css";
 
 function App() {

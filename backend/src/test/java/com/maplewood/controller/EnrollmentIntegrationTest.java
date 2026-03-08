@@ -41,7 +41,7 @@ class EnrollmentIntegrationTest {
             .contentType(MediaType.APPLICATION_JSON)
             .content(body))
             .andExpect(status().isConflict());
-    mvc.perform(delete("/api/enrollments/100/sections/1")) /* Have to do cleanup */
+    mvc.perform(delete("/api/enrollments/100/sections/1")) /* To handle cleanup */
             .andExpect(status().isNoContent());
     }
     

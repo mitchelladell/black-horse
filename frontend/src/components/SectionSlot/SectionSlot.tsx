@@ -1,4 +1,4 @@
-import type { CourseSection, TimeSlot } from "../../types/Course";
+import type { CourseSection } from "../../types/Course";
 import styles from "./SectionSlot.module.css";
 
 export const SectionSlot = ({

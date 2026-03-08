@@ -56,12 +56,10 @@ public class GlobalExceptionHandler {
         return build(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error", req.getRequestURI());
     }
 
-    // Helper for general errors
     private ResponseEntity<ApiError> build(HttpStatus status, String message, String path) {
         return buildWithCode(status, message, path, null);
     }
 
-    // Master helper for machine-readable codes
     private ResponseEntity<ApiError> buildWithCode(HttpStatus status, String message, String path, String errorCode) {
         ApiError body = new ApiError(
                 Instant.now(),

@@ -248,7 +248,6 @@ void enroll_prerequisiteNotSatisfied_throws409() {
     when(slot.getEndTime()).thenReturn("09:00");
     when(timeSlotRepository.findBySectionId(10L)).thenReturn(List.of(slot));
 
-    // History has no PASSED record for prereq course 99
     when(historyRepository.findByStudentIdWithCourse(1L)).thenReturn(List.of());
 
     EnrollmentRequestDto req = new EnrollmentRequestDto(1L, 10L);
