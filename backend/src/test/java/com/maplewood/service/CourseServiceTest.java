@@ -28,11 +28,9 @@ class CourseServiceTest {
         course.setName("Algebra");
 
         // 2. Mock Pagination logic
-        // We expect the service to call findFilteredPage with (null, null, PageRequest.of(0, 10))
         PageRequest pageable = PageRequest.of(0, 10);
-        Page<Course> page = new PageImpl<>(List.of(course));
+        Page<Course> page = new PageImpl<>(List.of(course), pageable,100L);
 
-        // Use the NEW method name: findFilteredPage
         when(repo.findFilteredPage(null, null, pageable)).thenReturn(page);
 
    
@@ -44,7 +42,6 @@ class CourseServiceTest {
         assertEquals(0, result.page());
         assertFalse(result.last());
         
-        // Verify the NEW method was called
         verify(repo).findFilteredPage(null, null, pageable);
     }
 }

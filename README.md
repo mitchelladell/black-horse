@@ -1,4 +1,4 @@
-# 🏫 Maplewood High School - Course Planning Challenge
+# 🏫 High School - Course Planning Challenge
 
 Build a full-stack course planning application for students to browse courses, plan their semester schedule, and track graduation progress.
 
@@ -89,28 +89,147 @@ fullstack-challenge/
 
 ---
 
-**Implementation?**
+## 🛠️ Implementation
 
-Backend Architecture
+### How to Run
 
-The backend follows a layered architecture:
+**Both (recommended)**
 
-Controller → Service → Repository → Database
+```bash
 
-Controllers expose REST endpoints.
-Services implement business rules such as enrollment validation.
-Repositories handle database access through Spring Data JPA.
+./scripts/dev.sh
+```
 
-Validation rules implemented:
+Starts backend on `http://localhost:8080` and frontend on `http://localhost:3000`.
 
-- Max 5 courses per semester
-- Course prerequisite enforcement
-- Schedule time conflict detection
-- Section capacity checks
-- Duplicate enrollment prevention
+API endpoints are documented with Swagger please visit :
 
-Teacher scheduling constraints are enforced at the database level through
-pre-generated course sections and database triggers. The backend API focuses
-on student enrollment validation (capacity, prerequisites, schedule conflicts).
+`http://localhost:8080/swagger-ui/index.html`
 
-**Questions?** Email: <DL-eBay-Data-Productization@ebay.com>
+**Backend only**
+
+```bash
+cd backend
+mvn spring-boot:run
+```
+
+**Frontend only**
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+**Tests**
+
+```bash
+# Backend
+cd backend
+mvn test
+
+# Frontend
+cd frontend
+npm test
+```
+
+---
+
+### Architecture
+
+```
+Follows a 5 tier Architecture
+    ┌─────────────────────┐
+    │     React Frontend  │
+    │                     │
+    │  Pages              │
+    │  - Dashboard        │
+    │  - Course Browser   │
+    │  - Schedule         │
+    │                     │
+    │  React Query Hooks  │
+    │  API Calls          │
+    └──────────┬──────────┘
+        │
+        │ HTTP / JSON
+        │
+        ▼
+    ┌─────────────────────────┐
+    │  Spring Boot Backend    │
+    │                         │
+    │  Controllers            │
+    │  - CourseController     │
+    │  - StudentController    │
+    │  - EnrollmentController │
+    │                         │
+    └──────────┬──────────────┘
+        │
+        ▼
+    ┌─────────────────────────┐
+    │       Services          │
+    │                         │
+    │  EnrollmentService      │
+    │  CourseService          │
+    │  StudentService         │
+    │                         │
+    │  Business Rules:        │
+    │  - prerequisites        │
+    │  - max 5 courses        │
+    │  - capacity             │
+    │  - schedule conflicts   │
+    └──────────┬──────────────┘
+        │
+        ▼
+    ┌─────────────────────────┐
+    │      Repositories       │
+    │                         │
+    │  StudentRepository      │
+    │  CourseRepository       │
+    │  CourseSectionRepo      │
+    │  EnrollmentRepository   │
+    │  TimeSlotRepository     │
+    │                         │
+    │  (Spring Data JPA)      │
+    └──────────┬──────────────┘
+        │
+        ▼
+    ┌──────────────┐
+    │   Database   │
+    │              │
+    │  Tables:     │
+    │  students    │
+    │  courses     │
+    │  sections    │
+    │  timeslots   │
+    │  enrollments │
+    │  history     │
+    └──────────────┘
+```
+
+---
+
+### Key Technical Decisions
+
+**Validation ordering (cheap → expensive)**  
+Enrollment checks are ordered by computational cost: existence checks first, then fast-fail business rules, then DB counts, then schedule conflict detection. This minimizes database load on invalid requests.
+
+**Optimistic updates on unenroll only**  
+Unenroll uses optimistic updates because the data shape is known removing an existing `ScheduleItem` from cache is safe. Enroll does not use optimistic updates because only `studentId` and `sectionId` are available at mutation time, not the full `ScheduleItem` shape needed to render the schedule correctly.
+
+**Pagination metadata**  
+The API returns `PagedResponse<T>` with `content`, `page`, `totalPages`, `totalElements`, and `last`. The frontend uses `last` to determine if the Next button should be disabled. That is more accurate than assuming a fixed page size.
+
+**React Query vs Redux**  
+React Query manages all server state (courses, schedule, student profile) with caching, background refetching, and optimistic updates. Redux manages UI state only (active filters, current student, pagination page).
+
+---
+
+### Features Implemented
+
+- Course browser with grade and semester filters
+- Pagination with server-side metadata
+- Enrollment with full validation (prerequisites, capacity, conflicts, max 5 courses)
+- Unenroll with optimistic updates
+- Student dashboard (GPA, credits earned, graduation progress)
+- Current semester schedule
+- Prerequisite names resolved server-side and included in course response
