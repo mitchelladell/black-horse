@@ -6,6 +6,9 @@ cleanup() {
 }
 trap cleanup EXIT
 
+echo "Installing frontend dependencies..."
+( cd frontend && npm install )
+
 echo "Starting backend on :8080"
 ( cd backend && mvn spring-boot:run ) &
 
